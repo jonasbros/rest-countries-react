@@ -1,9 +1,7 @@
 import customFetch from "~/lib/api";
 
-const apiUrl = import.meta.env.VITE_API_URL || 'https://restcountries.com/v3.1';
-
 export function useCountries() {
-  return { getAll, getPaginated };
+  return { getAll, getPaginated, getTotalPages };
 }
 
 async function getAll() {
@@ -23,7 +21,7 @@ async function getAll() {
     'languages',
   ].join(',');
 
-  return await customFetch({ url: `${apiUrl}/all?fields=${fields}` })
+  return await customFetch({ endpoint: `/all?fields=${fields}` })
   .then((data) => {
     localStorage.setItem("countries", JSON.stringify(data));
     return data;
@@ -34,7 +32,7 @@ async function getAll() {
   });
 }
 
-async function getPaginated(page: number = 1, limit: number = 12) {
+async function getPaginated(page: number = 1, perpage: number = 12) {
   const storedCountries = localStorage.getItem("countries");
   let countries = [];
   if (storedCountries) {
@@ -43,5 +41,15 @@ async function getPaginated(page: number = 1, limit: number = 12) {
     countries = await getAll();
   }
 
-  return countries.splice((page - 1) * limit, page * limit);
+  return countries.splice((page - 1) * perpage, page * perpage);
 } 
+
+function getTotalPages(perpage: number = 12) {
+  const storedCountries = localStorage.getItem("countries");
+  let countries = [];
+  if (storedCountries) {
+    countries = JSON.parse(storedCountries);
+  }
+
+  return Math.ceil(countries.length / perpage);
+}
