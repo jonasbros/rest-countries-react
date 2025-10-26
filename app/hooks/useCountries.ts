@@ -1,7 +1,7 @@
 import customFetch from "~/lib/api";
 
 export function useCountries() {
-  return { getAll, getPaginated, getTotalPages };
+  return { getAll, getPaginated, getInfiniteScrollPaginated, getTotalPages };
 }
 
 async function getAll() {
@@ -33,15 +33,13 @@ async function getAll() {
 }
 
 async function getPaginated(page: number = 1, perpage: number = 12) {
-  const storedCountries = localStorage.getItem("countries");
-  let countries = [];
-  if (storedCountries) {
-    countries = JSON.parse(storedCountries);
-  } else {
-    countries = await getAll();
-  }
+  const countries = await getAll();
+  return countries.slice((page - 1) * perpage, page * perpage);
+} 
 
-  return countries.splice((page - 1) * perpage, page * perpage);
+async function getInfiniteScrollPaginated(page: number = 1, perpage: number = 12) {
+  const countries = await getAll();
+  return countries.slice(0, page * perpage);
 } 
 
 function getTotalPages(perpage: number = 12) {

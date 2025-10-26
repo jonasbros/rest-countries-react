@@ -1,27 +1,39 @@
 'use client';
 
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router";
+import { useState, useEffect, useRef } from "react";
 
 import { useCountries } from "~/hooks/useCountries";
 import CountryCard from "./CountryCard";
 import CountriesLoading from "./CountriesLoading";
-import Pagination from "~/components/Pagination";
+import InfiniteScrollObserver from "../InfiniteScrollObserver";
 
 export default function CountriesList() {
-    const {getPaginated, getTotalPages } = useCountries();
+    const {getInfiniteScrollPaginated, getTotalPages } = useCountries();
     const [countries, setCountries] = useState([]);
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
     const [totalPages, setTotalPages] = useState(0);
-    const [searchParams] = useSearchParams();
+    const [currentPage, setCurrentPage] = useState(1);
+    const currentPageRef = useRef(currentPage);
+    currentPageRef.current = currentPage;
+
+    const fetchCountries = async (page = currentPage) => {
+      const fetchedCountries = await getInfiniteScrollPaginated(page);
+      setCountries(fetchedCountries as any);
+      setIsLoadingMore(false);
+    }
+
+    const loadMoreCountries = () => {
+      if(currentPageRef.current >= totalPages && isLoadingMore) return;
+      setIsLoadingMore(true);
+      const nextPage = currentPageRef.current + 1;
+      fetchCountries(nextPage);
+      setCurrentPage(nextPage);
+      console.log('loadMoreCountries called, currentPage:', nextPage);
+    };
 
     useEffect(() => {
-        const fetchCountries = async () => {
-            const currentPage = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
-            const fetchCountries = await getPaginated(currentPage);
-            setCountries(fetchCountries as any);
-        }
-        fetchCountries();
-    }, [searchParams.get("page")]);
+      fetchCountries();
+    }, []);
 
     useEffect(() => { 
       setTotalPages(getTotalPages());
@@ -30,22 +42,24 @@ export default function CountriesList() {
     return (
       <>
         <div className="grid grid-cols-4 gap-8">
-          {countries.length === 0 ? (
-            <CountriesLoading />
-          ) : (
+          {countries.length > 0 ? 
             countries.map((country: any) => (
               <CountryCard country={country} key={country.name.common} />
             ))
-          )}
+          : null}
+          
+          {countries.length === 0 || isLoadingMore ?
+            <CountriesLoading /> 
+          : null}
         </div>
 
         {countries.length > 0 ? (
-          <div className="flex justify-end mt-4">
-            <Pagination totalPages={totalPages} />
-          </div>
+          <InfiniteScrollObserver
+            onLoadMore={loadMoreCountries}
+            isLastPage={currentPage >= totalPages}
+          />
         ) : null} 
       </>
-
     );
   }
 
