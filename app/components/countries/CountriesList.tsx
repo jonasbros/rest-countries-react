@@ -19,7 +19,6 @@ export default function CountriesList() {
     const fetchCountries = async (page = currentPage) => {
       const fetchedCountries = await getInfiniteScrollPaginated(page);
       setCountries(fetchedCountries as any);
-      setIsLoadingMore(false);
     }
 
     const loadMoreCountries = () => {
@@ -28,7 +27,7 @@ export default function CountriesList() {
       const nextPage = currentPageRef.current + 1;
       fetchCountries(nextPage);
       setCurrentPage(nextPage);
-      console.log('loadMoreCountries called, currentPage:', nextPage);
+      setIsLoadingMore(false);
     };
 
     useEffect(() => {

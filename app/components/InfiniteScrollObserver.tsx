@@ -10,7 +10,6 @@ export default function InfiniteScrollObserver({ onLoadMore, isLastPage }: { onL
       (entries) => {
         const target = entries[0];
         if (target.isIntersecting && !isLastPage) {
-            console.log("observer triggered", target.isIntersecting);
             onLoadMore();
         }
       },
