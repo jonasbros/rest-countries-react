@@ -9,22 +9,11 @@ export default function CountryCard({ country }: { country: any }) {
 
     const handleUnload = useCallback(() => {
         setIsUnloaded(true);
-    
-        const img = ref.current?.querySelector('img');
-        if (img) {
-          img.src = '';
-          img.srcset = '';
-        }
     }, []);
 
     const handleReload = useCallback(() => {
         setIsUnloaded(false);
-    
-        const img = ref.current?.querySelector('img');
-        if (img) {
-          img.src = country.flags.png;
-        }
-    }, [country.flags.png]);
+    }, []);
 
     useEffect(() => {
         if (!ref.current) return;
@@ -68,10 +57,14 @@ export default function CountryCard({ country }: { country: any }) {
     return (
         <div ref={ref} className="country-card card bg-base-100 shadow-sm">
             <figure>
-                <img
-                    src={country.flags.png}
-                    alt="Shoes"
-                    className="w-full h-[210px]" />
+                {isUnloaded ? (
+                    <div className="w-full h-[210px] bg-gray-200" />
+                ) : (
+                    <img
+                        src={country.flags.png}
+                        alt="Shoes"
+                        className="w-full h-[210px]" />
+                )}
             </figure>
             <div className="card-body">
                 <h2 className="card-title">{country.name.common}</h2>
