@@ -1,13 +1,77 @@
+import { useState, useEffect, useRef, useCallback } from "react";
+import intersectionObserver from "../../utils/intersection-observer";
+
 import AddToBucketBtn from "./AddToBucketBtn";
 
 export default function CountryCard({ country }: { country: any }) {
+    const ref = useRef<HTMLDivElement | null>(null);
+    const [isUnloaded, setIsUnloaded] = useState(false);
+
+    const handleUnload = useCallback(() => {
+        setIsUnloaded(true);
+    
+        const img = ref.current?.querySelector('img');
+        if (img) {
+          img.src = '';
+          img.srcset = '';
+        }
+    }, []);
+
+    const handleReload = useCallback(() => {
+        setIsUnloaded(false);
+    
+        const img = ref.current?.querySelector('img');
+        if (img) {
+          img.src = country.flags.png;
+        }
+    }, [country.flags.png]);
+
+    useEffect(() => {
+        if (!ref.current) return;
+        const animationObserver = intersectionObserver(
+            ref.current,
+            (entry) => {
+                entry.target.classList.toggle('animate-fade-in-scale-up', entry.isIntersecting);
+
+                if(entry.isIntersecting) {
+                    animationObserver.observer.unobserve(entry.target);
+                }
+            }
+        );
+
+        const unloadObserver = intersectionObserver(
+            ref.current,
+            (entry) => {
+                if(entry.isIntersecting) {
+                    handleReload();
+                } else {
+                  // Check distance for unloading
+                  const rect = entry.boundingClientRect;
+                  const distanceFromViewport = Math.abs(rect.top - window.innerHeight/2);
+
+                  if (distanceFromViewport > 2000) {
+                      handleUnload();
+                  }
+                }
+            },
+            {
+                rootMargin: '2000px',
+            }
+        )
+  
+        return () => {
+            animationObserver.cleanup();
+            unloadObserver.cleanup();
+        }
+    }, []);
+
     return (
-        <div className="card bg-base-100 shadow-sm">
+        <div ref={ref} className="country-card card bg-base-100 shadow-sm">
             <figure>
-            <img
-                src={country.flags.png}
-                alt="Shoes"
-                className="w-full h-[210px]" />
+                <img
+                    src={country.flags.png}
+                    alt="Shoes"
+                    className="w-full h-[210px]" />
             </figure>
             <div className="card-body">
                 <h2 className="card-title">{country.name.common}</h2>

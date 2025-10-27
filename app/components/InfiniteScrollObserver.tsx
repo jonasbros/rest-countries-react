@@ -1,35 +1,35 @@
 'use client';
 
 import { useEffect, useRef } from "react";
+import intersectionObserver from "../utils/intersection-observer";
 
 export default function InfiniteScrollObserver({ onLoadMore, isLastPage }: { onLoadMore: () => void, isLastPage: Boolean }) {
   const loaderRef = useRef(null); 
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const target = entries[0];
-        if (target.isIntersecting && !isLastPage) {
-            onLoadMore();
+    if (!loaderRef.current) return;
+    const InfiniteScrollObserver = intersectionObserver(
+        loaderRef.current,
+        (entry) => {
+            if(entry.isIntersecting) {
+              onLoadMore();
+            }
+        },
+        {
+          root: null,
+          rootMargin: "250px",
+          threshold: 0,
         }
-      },
-      {
-        root: null,
-        rootMargin: "250px",
-        threshold: 0,
-      }
     );
 
-    if (loaderRef.current) observer.observe(loaderRef.current);
-
     return () => {
-      if (loaderRef.current) observer.unobserve(loaderRef.current);
-    };
+      InfiniteScrollObserver.cleanup();
+    }
   }, [onLoadMore]);
 
   return (
     <>
-      <div ref={loaderRef} className="h-10" />
+      <div ref={loaderRef} />
     </>
   );
 }
