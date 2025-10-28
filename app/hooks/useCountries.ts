@@ -1,7 +1,7 @@
 import customFetch from "~/lib/api";
 
 export function useCountries() {
-  return { getAll, getPaginated, getInfiniteScrollPaginated, getTotalPages };
+  return { getAll, getPaginated, getInfiniteScrollPaginated, getTotalPages, getCountry };
 }
 
 async function getAll() {
@@ -52,4 +52,14 @@ function getTotalPages(perpage: number = 12) {
   }
 
   return Math.ceil(countries.length / perpage);
+}
+
+function getCountry(cca2Code: string) {
+  const storedCountries = localStorage.getItem("countries");
+  let countries = [];
+  if (storedCountries) {
+    countries = JSON.parse(storedCountries);
+  }
+
+  return countries.find((country: any) => country.cca2 === cca2Code.toUpperCase());
 }
