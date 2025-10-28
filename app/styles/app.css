@@ -4,7 +4,7 @@
 }
 
 .country-card {
-    @apply opacity-0 transform scale-95 transition-[opacity,transform] duration-700;
+    @apply opacity-0 transform scale-95 transition-[opacity,scale] duration-700;
 }
 
 .country-card.animate-fade-in-scale-up {
