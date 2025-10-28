@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { Link } from "react-router";
+
 import intersectionObserver from "../../utils/intersection-observer";
 
 import AddToBucketBtn from "./AddToBucketBtn";
@@ -86,7 +88,7 @@ export default function CountryCard({ country }: { country: any }) {
 
                 <div className="card-actions justify-end">
                     <AddToBucketBtn country={country} />
-                    <button className="btn btn-primary">More Info</button>
+                    <Link to={`/country/${country.cca2.toLowerCase()}`} className="btn btn-primary">More Info</Link>
                 </div>
             </div>
         </div>

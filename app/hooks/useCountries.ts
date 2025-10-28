@@ -19,6 +19,8 @@ async function getAll() {
     'timezones',
     'currencies',
     'languages',
+    'cca2',
+    'latlng',
   ].join(',');
 
   return await customFetch({ endpoint: `/all?fields=${fields}` })
