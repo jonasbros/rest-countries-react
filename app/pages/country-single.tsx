@@ -48,7 +48,7 @@ export function CountryPage() {
               </div>
 
               <div className="mt-8">
-                <AddToBucketBtn country={country}>Add to Bucket List</AddToBucketBtn>
+                <AddToBucketBtn country={country} showLabel />
               </div>
             </div>
 
