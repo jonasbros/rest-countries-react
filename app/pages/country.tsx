@@ -44,37 +44,44 @@ export function CountryPage() {
                 <img
                   src={country.flags.svg}
                   alt={`${country.name.common} flag`}
-                  className="h-8"
+                  className="h-10"
                 />
-                <h1 className="text-4xl font-bold">{country.name.common}</h1>
+                <h1 className="text-4xl font-semibold">
+                  {country.name.common}
+                </h1>
               </div>
 
               <div className="mt-4">
-                <p>
-                  <strong>Official Name:</strong> {country.name.official}
-                </p>
-                <p>
-                  <strong>Capital:</strong>{" "}
-                  {country.capital ? country.capital.join(", ") : "N/A"}
-                </p>
-                <p>
-                  <strong>Population:</strong>{" "}
-                  {country.population.toLocaleString()}
-                </p>
-                <p>
-                  <strong>Languages:</strong>{" "}
-                  {country.languages
-                    ? Object.values(country.languages).join(", ")
-                    : "N/A"}
-                </p>
-                <p>
-                  <strong>Currencies:</strong>{" "}
-                  {country.currencies
-                    ? Object.values(country.currencies)
-                        .map((curr: any) => curr.name)
-                        .join(", ")
-                    : "N/A"}
-                </p>
+                <ul>
+                  <li>
+                    <span className="font-semibold">Official Name:</span>{" "}
+                    {country.name.official}
+                  </li>
+                  <li>
+                    <span className="font-semibold">Languages:</span>{" "}
+                    {Object.values(country.languages).join(", ")}
+                  </li>
+                  <li>
+                    <span className="font-semibold">Capital:</span>{" "}
+                    {country.capital.join(", ")}
+                  </li>
+                  <li>
+                    <span className="font-semibold">Continent:</span>{" "}
+                    {country.continents.join(", ")}
+                  </li>
+                  <li>
+                    <span className="font-semibold">Population:</span>{" "}
+                    {country.population.toLocaleString()}
+                  </li>
+                  <li>
+                    <span className="font-semibold">Timezones:</span>{" "}
+                    {country.timezones.join(", ")}
+                  </li>
+                  <li>
+                    <span className="font-semibold">Currencies:</span>{" "}
+                    {Object.keys(country.currencies)[0]}
+                  </li>
+                </ul>
               </div>
 
               <div className="mt-4">

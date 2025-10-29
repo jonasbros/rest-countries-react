@@ -1,8 +1,10 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { useBucketList } from "~/hooks/useBucketList";
 
 import AddToBucketBtn from "~/components/countries/AddToBucketBtn";
 import InfiniteScrollObserver from "../InfiniteScrollObserver";
+
+import { BucketListSelectedCountry } from "~/context/contexts";
 
 export default function BucketList() {
   const { getInfiniteScrollPaginated, getTotalPages } = useBucketList();
@@ -12,6 +14,7 @@ export default function BucketList() {
   const [currentPage, setCurrentPage] = useState(1);
   const currentPageRef = useRef(currentPage);
   const listContainer = useRef<HTMLDivElement>(null);
+  const { setSelectedCountry } = useContext(BucketListSelectedCountry);
   currentPageRef.current = currentPage;
 
   const fetchCountries = async (page = currentPage) => {
@@ -28,6 +31,10 @@ export default function BucketList() {
     setIsLoadingMore(false);
   };
 
+  const selectCountry = (country: any) => {
+    setSelectedCountry(country);
+  };
+
   useEffect(() => {
     fetchCountries();
   }, []);
@@ -35,31 +42,33 @@ export default function BucketList() {
   useEffect(() => {
     setTotalPages(getTotalPages());
   }, []);
+
   return (
-    <div ref={listContainer} className="col-span-4 h-full overflow-y-scroll">
+    <div
+      ref={listContainer}
+      className="col-span-4 h-full overflow-y-scroll pr-2"
+    >
       {countries.length === 0 ? (
         <p className="text-center italic mt-10 opacity-60">
           Your bucket list is empty. Start adding countries!
         </p>
       ) : (
         <>
-          <ul className="list bg-base-100 rounded-box shadow-md p-3">
+          <ul className="list bg-base-100 rounded-box shadow-md">
             {countries.map((country) => (
               <li
                 className="list-row hover:bg-base-200 cursor-pointer"
                 key={country.cca2}
+                onClick={() => selectCountry(country)}
               >
                 <div>
-                  <img
-                    className="h-10 w-14 rounded-box"
-                    src={country.flags.png}
-                  />
+                  <img className="h-10" src={country.flags.png} />
                 </div>
-                <div>
-                  <div>{country.name.common}</div>
-                  <div className="text-xs uppercase font-semibold opacity-60">
+                <div className="truncate">
+                  <p>{country.name.common}</p>
+                  <p className="text-xs uppercase font-semibold opacity-60">
                     {country.name.official}
-                  </div>
+                  </p>
                 </div>
                 <AddToBucketBtn country={country} className="btn-soft" />
               </li>
