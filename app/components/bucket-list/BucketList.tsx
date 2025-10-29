@@ -64,6 +64,17 @@ export default function BucketList() {
                 <AddToBucketBtn country={country} className="btn-soft" />
               </li>
             ))}
+
+            {isLoadingMore && (
+              <li className="list-row">
+                <div className="h-10 w-14 skeleton"></div>
+                <div className="flex flex-col gap-2">
+                  <div className="h-4 w-32 skeleton"></div>
+                  <div className="h-4 w-64 skeleton"></div>
+                </div>
+                <div className="size-10 skeleton"></div>
+              </li>
+            )}
           </ul>
           <InfiniteScrollObserver
             onLoadMore={loadMoreCountries}
