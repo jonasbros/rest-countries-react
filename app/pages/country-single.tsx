@@ -18,7 +18,7 @@ export function CountryPage() {
     <main className="flex items-center justify-center pt-32 pb-6">
       <section className="container bg-base-300 p-6 rounded-2xl">
         <button className="btn btn-primary btn-square btn-sm" onClick={() => navigate(-1)}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="19" y1="12" x2="5" y2="12"/>
             <polyline points="12 19 5 12 12 5"/>
           </svg>

@@ -16,8 +16,8 @@ export default function CountryMap({ cca2Code, height, width, className }: { cca
                 width={width}
                 height={height}
                 loading="lazy"
-                allowFullscreen="true"
-                referrerpolicy="no-referrer-when-downgrade"
+                allowFullScreen={true}
+                referrerPolicy="no-referrer-when-downgrade"
                 src={`https://www.google.com/maps/embed/v1/place?key=${ApiKey}
                 &q=${country.name.common}&center=${country.latlng.join(',')}&zoom=6`}
                 className={className}
