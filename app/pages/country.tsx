@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router";
 import { useCountries } from "~/hooks/useCountries";
 import CountryMap from "~/components/countries/CountryMap";
 import AddToBucketBtn from "~/components/countries/AddToBucketBtn";
+import CountryInfoList from "~/components/countries/CountryInfoList";
 
 export function CountryPage() {
   const { code } = useParams();
@@ -52,36 +53,7 @@ export function CountryPage() {
               </div>
 
               <div className="mt-4">
-                <ul>
-                  <li>
-                    <span className="font-semibold">Official Name:</span>{" "}
-                    {country.name.official}
-                  </li>
-                  <li>
-                    <span className="font-semibold">Languages:</span>{" "}
-                    {Object.values(country.languages).join(", ")}
-                  </li>
-                  <li>
-                    <span className="font-semibold">Capital:</span>{" "}
-                    {country.capital.join(", ")}
-                  </li>
-                  <li>
-                    <span className="font-semibold">Continent:</span>{" "}
-                    {country.continents.join(", ")}
-                  </li>
-                  <li>
-                    <span className="font-semibold">Population:</span>{" "}
-                    {country.population.toLocaleString()}
-                  </li>
-                  <li>
-                    <span className="font-semibold">Timezones:</span>{" "}
-                    {country.timezones.join(", ")}
-                  </li>
-                  <li>
-                    <span className="font-semibold">Currencies:</span>{" "}
-                    {Object.keys(country.currencies)[0]}
-                  </li>
-                </ul>
+                <CountryInfoList country={country} />
               </div>
 
               <div className="mt-4">
@@ -108,8 +80,8 @@ export function CountryPage() {
                 cca2Code={code}
                 width="550"
                 height="400"
-                className="ml-auto"
-              ></CountryMap>
+                className="ml-auto rounded-lg"
+              />
             </div>
           </div>
         )}

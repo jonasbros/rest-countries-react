@@ -7,6 +7,7 @@ export function useCountries() {
     getInfiniteScrollPaginated,
     getTotalPages,
     getCountry,
+    getCountryInfo,
   };
 }
 
@@ -73,4 +74,32 @@ function getCountry(cca2Code: string) {
   return countries.find(
     (country: any) => country.cca2 === cca2Code.toUpperCase()
   );
+}
+
+async function getCountryInfo(name: string) {
+  const wikiPageUrl = `https://en.wikipedia.org/w/rest.php/v1/page/${name}/html`;
+  try {
+    const response = await fetch(wikiPageUrl);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const result = await response.text();
+    return extractFirstSectionFromCountryInfo(result);
+  } catch (error: any) {
+    console.error(error.message);
+  }
+}
+
+function extractFirstSectionFromCountryInfo(htmlContent: string) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlContent, "text/html");
+  const firstSection = doc.querySelector("section");
+  const paragraphs = firstSection?.querySelectorAll("p");
+  return Array.from(paragraphs || [])
+    .map((p) => p.textContent?.replace(/\[\w+\]/g, ""))
+    .filter(
+      (text): text is string =>
+        text !== null && text?.trim() !== "" && text !== "\n"
+    );
 }

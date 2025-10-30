@@ -74,11 +74,6 @@ export default function CountryCard({ country }: { country: any }) {
       <div className="card-body">
         <h2 className="card-title">{country.name.common}</h2>
         <div>
-          <p className="mb-4">
-            Vexillologist DSA mumblecore, same paleo etsy slow-carb meggings
-            bicycle rights helvetica small batch. Etsy pinterest gochujang cred
-            mustache. Kombucha raw denim marxism cardigan, dreamcatcher squid.
-          </p>
           <div className="grid grid-cols-2">
             <ul>
               <li>
