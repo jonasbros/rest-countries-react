@@ -8,12 +8,21 @@ import CountryInfoList from "~/components/countries/CountryInfoList";
 export function CountryPage() {
   const { code } = useParams();
   const navigate = useNavigate();
-  const { getCountry } = useCountries();
+  const { getCountry, getCountryInfo } = useCountries();
   const [country, setCountry] = useState<any>(null);
+  const [countryInfo, setCountryInfo] = useState<any>(null);
 
   useEffect(() => {
     setCountry(getCountry(code || ""));
   }, []);
+
+  useEffect(() => {
+    if (!country) return;
+    const fetchCountryInfo = async () => {
+      setCountryInfo(await getCountryInfo(country.name.common));
+    };
+    fetchCountryInfo();
+  });
 
   return (
     <main className="flex items-center justify-center pt-32 pb-6">
@@ -56,22 +65,20 @@ export function CountryPage() {
                 <CountryInfoList country={country} />
               </div>
 
-              <div className="mt-4">
-                Fusce egestas molestie ipsum vitae molestie. Proin et tortor in
-                orci viverra lacinia a vitae tortor. Nunc porttitor congue dui,
-                ac volutpat orci. Fusce vel ornare tellus. Sed ultrices neque
-                tincidunt mauris convallis, id pellentesque lorem dignissim.
-                Vestibulum at posuere sapien. Etiam aliquet, felis in faucibus
-                finibus, ligula nibh hendrerit quam, nec placerat ante velit ut
-                ligula. Morbi mollis sit amet sem in scelerisque. Proin eu ex
-                justo. In eleifend posuere semper. Suspendisse venenatis
-                tincidunt massa. Ut et nunc lacus. Praesent vitae libero sapien.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non
-                nibh tellus. Donec nec vulputate lacus, eget blandit libero.
-              </div>
-
               <div className="mt-8">
                 <AddToBucketBtn country={country} showLabel />
+              </div>
+
+              <div className="mt-6">
+                {!countryInfo ? (
+                  <p>Loading Country Info...</p>
+                ) : (
+                  countryInfo.map((paragraph: string) => (
+                    <p className="mb-4 text-justify" key={paragraph}>
+                      {paragraph}
+                    </p>
+                  ))
+                )}
               </div>
             </div>
 
