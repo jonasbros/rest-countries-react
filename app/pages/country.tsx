@@ -48,47 +48,49 @@ export function CountryPage() {
         {!country ? (
           <p className="mt-8">Loading country data...</p>
         ) : (
-          <div className="grid grid-cols-2 mt-8">
-            <div>
-              <div className="flex items-center gap-3">
-                <img
-                  src={country.flags.svg}
-                  alt={`${country.name.common} flag`}
-                  className="h-10"
+          <div className="flex flex-col gap-4 mt-8">
+            <div className="grid grid-cols-2">
+              <div>
+                <div className="flex items-center gap-3">
+                  <img
+                    src={country.flags.svg}
+                    alt={`${country.name.common} flag`}
+                    className="h-10"
+                  />
+                  <h1 className="text-4xl font-semibold">
+                    {country.name.common}
+                  </h1>
+                </div>
+
+                <div className="mt-4">
+                  <CountryInfoList country={country} />
+                </div>
+
+                <div className="mt-8">
+                  <AddToBucketBtn country={country} showLabel />
+                </div>
+              </div>
+
+              <div>
+                <CountryMap
+                  cca2Code={code}
+                  width="100%"
+                  height="100%"
+                  className="ml-auto rounded-lg"
                 />
-                <h1 className="text-4xl font-semibold">
-                  {country.name.common}
-                </h1>
-              </div>
-
-              <div className="mt-4">
-                <CountryInfoList country={country} />
-              </div>
-
-              <div className="mt-8">
-                <AddToBucketBtn country={country} showLabel />
-              </div>
-
-              <div className="mt-6">
-                {!countryInfo ? (
-                  <p>Loading Country Info...</p>
-                ) : (
-                  countryInfo.map((paragraph: string) => (
-                    <p className="mb-4 text-justify" key={paragraph}>
-                      {paragraph}
-                    </p>
-                  ))
-                )}
               </div>
             </div>
 
             <div>
-              <CountryMap
-                cca2Code={code}
-                width="550"
-                height="400"
-                className="ml-auto rounded-lg"
-              />
+              {!countryInfo ? (
+                <p>Loading Country Info...</p>
+              ) : (
+                countryInfo.map((paragraph: string) => (
+                  <p className="mb-4 text-justify" key={paragraph}>
+                    {paragraph}
+                  </p>
+                ))
+              )}
             </div>
           </div>
         )}
