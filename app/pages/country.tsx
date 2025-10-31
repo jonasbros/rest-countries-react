@@ -22,7 +22,7 @@ export function CountryPage() {
       setCountryInfo(await getCountryInfo(country.name.common));
     };
     fetchCountryInfo();
-  });
+  }, [country]);
 
   return (
     <section className="container bg-base-300 p-6 rounded-2xl">
