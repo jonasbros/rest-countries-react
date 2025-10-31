@@ -49,7 +49,7 @@ export function CountryPage() {
           <p className="mt-8">Loading country data...</p>
         ) : (
           <div className="flex flex-col gap-4 mt-8">
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-2">
               <div>
                 <div className="flex items-center gap-3">
                   <img
@@ -73,13 +73,11 @@ export function CountryPage() {
 
               <CountryMap
                 cca2Code={code}
-                width="100%"
-                height="100%"
-                className="ml-auto rounded-lg"
+                className="mt-4 md:mt-0 md:ml-auto rounded-lg w-full h-[300px] md:h-full"
               />
             </div>
 
-            <div>
+            <div className="mt-4 md:mt-0">
               {!countryInfo ? (
                 <p>Loading Country Info...</p>
               ) : (
