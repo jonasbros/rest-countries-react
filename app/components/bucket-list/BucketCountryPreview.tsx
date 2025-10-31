@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useContext, Suspense } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { useCountries } from "~/hooks/useCountries";
 import { BucketListSelectedCountry } from "~/context/contexts";
 import CountryMap from "../countries/CountryMap";
