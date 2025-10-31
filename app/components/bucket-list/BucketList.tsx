@@ -46,7 +46,7 @@ export default function BucketList() {
   return (
     <div
       ref={listContainer}
-      className="col-span-12 lg:col-span-4 overflow-y-scroll pr-2 h-[600px] md:h-full"
+      className="col-span-12 lg:col-span-4 overflow-y-auto pr-2 h-[600px] md:h-full"
     >
       {countries.length === 0 ? (
         <p className="text-center italic mt-10 opacity-60">

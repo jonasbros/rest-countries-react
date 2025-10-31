@@ -22,7 +22,11 @@ export default function BucketCountryPreviewModal() {
     dialogRef.current?.showModal();
   }, [selectedCountry]);
 
-  return (
+  return !selectedCountry ? (
+    <div className="flex justify-center items-center h-full">
+      <p className="italic -mt-10">Select a country.</p>
+    </div>
+  ) : (
     <dialog ref={dialogRef} className="modal">
       <div className="modal-box py-8">
         <form method="dialog">
