@@ -71,14 +71,12 @@ export function CountryPage() {
                 </div>
               </div>
 
-              <div>
-                <CountryMap
-                  cca2Code={code}
-                  width="100%"
-                  height="100%"
-                  className="ml-auto rounded-lg"
-                />
-              </div>
+              <CountryMap
+                cca2Code={code}
+                width="100%"
+                height="100%"
+                className="ml-auto rounded-lg"
+              />
             </div>
 
             <div>

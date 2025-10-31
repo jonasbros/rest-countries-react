@@ -21,16 +21,20 @@ export default function CountryMap({
   }, [cca2Code]);
 
   return country ? (
-    <iframe
-      width={width}
-      height={height}
-      loading="lazy"
-      allowFullScreen={true}
-      referrerPolicy="no-referrer-when-downgrade"
-      src={`https://www.google.com/maps/embed/v1/place?key=${ApiKey}
-                &q=${country.name.common}&center=${country.latlng.join(",")}&zoom=6`}
-      className={className}
-    ></iframe>
+    <div className="relative">
+      <span className="loading loading-spinner loading-lg absolute top-1/2 left-1/2 -translate-1/2"></span>
+
+      <iframe
+        width={width}
+        height={height}
+        loading="lazy"
+        allowFullScreen={true}
+        referrerPolicy="no-referrer-when-downgrade"
+        src={`https://www.google.com/maps/embed/v1/place?key=${ApiKey}
+                    &q=${country.name.common}&center=${country.latlng.join(",")}&zoom=6`}
+        className={`relative z-1 ${className}`}
+      ></iframe>
+    </div>
   ) : (
     <p>Loading map...</p>
   );
