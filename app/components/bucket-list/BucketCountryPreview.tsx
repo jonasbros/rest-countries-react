@@ -45,9 +45,7 @@ export default function BucketCountryPreview() {
           </div>
           <CountryMap
             cca2Code={selectedCountry.cca2}
-            width="100%"
-            height="300"
-            className="ml-auto rounded-lg row-span-1"
+            className="w-full lg:h-[300px] row-span-1"
           />
 
           <div className="col-span-2 row-span-1 overflow-y-auto h-full">
