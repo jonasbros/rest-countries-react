@@ -25,72 +25,70 @@ export function CountryPage() {
   });
 
   return (
-    <main className="flex items-center justify-center pt-32 pb-6">
-      <section className="container bg-base-300 p-6 rounded-2xl">
-        <button
-          className="btn btn-primary btn-square btn-sm"
-          onClick={() => navigate(-1)}
+    <section className="container bg-base-300 p-6 rounded-2xl">
+      <button
+        className="btn btn-primary btn-square btn-sm"
+        onClick={() => navigate(-1)}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <line x1="19" y1="12" x2="5" y2="12" />
-            <polyline points="12 19 5 12 12 5" />
-          </svg>
-        </button>
-        {!country ? (
-          <p className="mt-8">Loading country data...</p>
-        ) : (
-          <div className="flex flex-col gap-4 mt-8">
-            <div className="grid grid-cols-1 md:grid-cols-2">
-              <div>
-                <div className="flex items-center gap-3">
-                  <img
-                    src={country.flags.svg}
-                    alt={`${country.name.common} flag`}
-                    className="h-10"
-                  />
-                  <h1 className="text-4xl font-semibold">
-                    {country.name.common}
-                  </h1>
-                </div>
-
-                <div className="mt-4">
-                  <CountryInfoList country={country} />
-                </div>
-
-                <div className="mt-8">
-                  <AddToBucketBtn country={country} showLabel />
-                </div>
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
+      </button>
+      {!country ? (
+        <p className="mt-8">Loading country data...</p>
+      ) : (
+        <div className="flex flex-col gap-4 mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div>
+              <div className="flex items-center gap-3">
+                <img
+                  src={country.flags.svg}
+                  alt={`${country.name.common} flag`}
+                  className="h-10"
+                />
+                <h1 className="text-4xl font-semibold">
+                  {country.name.common}
+                </h1>
               </div>
 
-              <CountryMap
-                cca2Code={code}
-                className="mt-4 md:mt-0 md:ml-auto rounded-lg w-full h-[300px] md:h-full"
-              />
+              <div className="mt-4">
+                <CountryInfoList country={country} />
+              </div>
+
+              <div className="mt-8">
+                <AddToBucketBtn country={country} showLabel />
+              </div>
             </div>
 
-            <div className="mt-4 md:mt-0">
-              {!countryInfo ? (
-                <p>Loading Country Info...</p>
-              ) : (
-                countryInfo.map((paragraph: string) => (
-                  <p className="mb-4 text-justify" key={paragraph}>
-                    {paragraph}
-                  </p>
-                ))
-              )}
-            </div>
+            <CountryMap
+              cca2Code={code}
+              className="mt-4 md:mt-0 md:ml-auto rounded-lg w-full h-[300px] md:h-full"
+            />
           </div>
-        )}
-      </section>
-    </main>
+
+          <div className="mt-4 md:mt-0">
+            {!countryInfo ? (
+              <p>Loading Country Info...</p>
+            ) : (
+              countryInfo.map((paragraph: string) => (
+                <p className="mb-4 text-justify" key={paragraph}>
+                  {paragraph}
+                </p>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+    </section>
   );
 }

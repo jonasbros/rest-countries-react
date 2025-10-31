@@ -1,15 +1,9 @@
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "react-router";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./styles/app.css";
 
-import Error from "./error"
+import Error from "./error";
 import TheHeader from "./components/header/TheHeader";
 
 export const links: Route.LinksFunction = () => [
@@ -36,7 +30,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <TheHeader />
-        {children}
+        <main className="flex items-center justify-center pt-26 lg:pt-32 pb-6">
+          {children}
+        </main>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -49,5 +45,5 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  return <Error error={error} />
+  return <Error error={error} />;
 }
