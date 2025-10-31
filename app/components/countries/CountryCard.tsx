@@ -62,12 +62,12 @@ export default function CountryCard({ country }: { country: any }) {
     <div ref={ref} className="country-card card bg-base-100 shadow-sm">
       <figure>
         {isUnloaded ? (
-          <div className="w-full h-[210px] bg-gray-200" />
+          <div className="w-full h-[250px] bg-gray-200 2xl:h-[210px] lg:h-[250px]" />
         ) : (
           <img
             src={country.flags.png}
             alt="Shoes"
-            className="w-full h-[210px]"
+            className="w-full h-[250px] 2xl:h-[210px] lg:h-[250px] sm:h-[210px]"
           />
         )}
       </figure>
