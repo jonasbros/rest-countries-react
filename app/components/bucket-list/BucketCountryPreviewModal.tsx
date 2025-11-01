@@ -30,34 +30,36 @@ export default function BucketCountryPreviewModal() {
             ✕
           </button>
         </form>
-        <div className="flex flex-col items-start gap-4 h-full">
-          <div className="flex items-center gap-3">
-            <img
-              src={selectedCountry.flags.svg}
-              alt={`${selectedCountry.name.common} flag`}
-              className="h-10"
-            />
-            <div>
-              <h1 className="text-2xl sm:text-4xl font-bold">
-                {selectedCountry.name.common}
-              </h1>
+        <div className="max-h-[65vh] overflow-y-auto">
+          <div className="flex flex-col items-start gap-4 h-full">
+            <div className="flex items-center gap-3">
+              <img
+                src={selectedCountry.flags.svg}
+                alt={`${selectedCountry.name.common} flag`}
+                className="h-10"
+              />
+              <div>
+                <h1 className="text-2xl sm:text-4xl font-bold">
+                  {selectedCountry.name.common}
+                </h1>
+              </div>
             </div>
-          </div>
-          <CountryInfoList country={selectedCountry} />
-          <CountryMap
-            cca2Code={selectedCountry.cca2}
-            className="w-full h-[300px]"
-          />
+            <CountryInfoList country={selectedCountry} />
+            <CountryMap
+              cca2Code={selectedCountry.cca2}
+              className="w-full h-[300px]"
+            />
 
-          {!countryInfo ? (
-            <p>Loading Country Info...</p>
-          ) : (
-            countryInfo.map((paragraph: string) => (
-              <p className="text-justify" key={paragraph}>
-                {paragraph}
-              </p>
-            ))
-          )}
+            {!countryInfo ? (
+              <p>Loading Country Info...</p>
+            ) : (
+              countryInfo.map((paragraph: string) => (
+                <p className="text-justify" key={paragraph}>
+                  {paragraph}
+                </p>
+              ))
+            )}
+          </div>
         </div>
       </div>
       <form method="dialog" className="modal-backdrop">
