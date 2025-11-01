@@ -1,4 +1,4 @@
-# [Check it out live here!](https://rest-countries-react-sepia-seven.vercel.app){:target="_blank"}
+# [Check it out live here!](https://rest-countries-react-sepia-seven.vercel.app)
 
 # Welcome to React Router!
 
