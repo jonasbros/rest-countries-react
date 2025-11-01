@@ -8,6 +8,7 @@ export function useCountries() {
     getTotalPages,
     getCountry,
     getCountryInfo,
+    getSearchResults,
   };
 }
 
@@ -102,4 +103,15 @@ function extractFirstSectionFromCountryInfo(htmlContent: string) {
       (text): text is string =>
         text !== null && text?.trim() !== "" && text !== "\n"
     );
+}
+
+async function getSearchResults(query: string) {
+  if (!query || query.trim() === "") {
+    return await getInfiniteScrollPaginated();
+  }
+
+  const countries = await getAll();
+  return countries.filter((country: any) =>
+    country.name.common.toLowerCase().includes(query.trim().toLowerCase())
+  );
 }
